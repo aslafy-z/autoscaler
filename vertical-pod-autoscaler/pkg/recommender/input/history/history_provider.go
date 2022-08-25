@@ -289,7 +289,7 @@ func (p *prometheusHistoryProvider) GetClusterHistory() (map[model.PodID]*PodHis
 			sort.Slice(samples, func(i, j int) bool { return samples[i].MeasureStart.Before(samples[j].MeasureStart) })
 		}
 	}
-	err = p.readLastLabels(res, p.config.PodLabelsMetricName)
+	err = p.readLastLabels(res, fmt.Sprintf("%s[%s]", p.config.PodLabelsMetricName, p.config.HistoryLength))
 	if err != nil {
 		return nil, fmt.Errorf("cannot read last labels: %v", err)
 	}
